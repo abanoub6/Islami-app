@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/app_theme.dart';
 import 'package:islami_app/home.dart';
 import 'package:islami_app/settings.dart';
 
@@ -17,6 +18,9 @@ class Islami extends StatelessWidget {
         Settings.routeName: (_) => Settings(),
       },
       initialRoute: Home.routeName,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
     );
   }
 }
