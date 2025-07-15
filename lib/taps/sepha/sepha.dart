@@ -9,6 +9,14 @@ class Sepha extends StatefulWidget {
 class _SephaState extends State<Sepha> {
   int numberOfSephaClicked = 0;
   double rotateAngle = 0.0;
+  int taspehRound = 0;
+  List<String> taspeh = [
+    "سبحان الله ",
+    "الحمد لله",
+    "لا اله الا الله",
+    "الله اكبر",
+    "لا حول ولا قوه الا بالله",
+  ];
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -23,7 +31,14 @@ class _SephaState extends State<Sepha> {
               children: [
                 Transform.rotate(
                   angle: rotateAngle,
-                  child: Image.asset("assets/images/body_sebha_logo.png"),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        rotateAngle += 10;
+                      });
+                    },
+                    child: Image.asset("assets/images/body_sebha_logo.png"),
+                  ),
                 ),
                 Positioned(
                   left: MediaQuery.of(context).size.width * 0.25,
@@ -72,13 +87,18 @@ class _SephaState extends State<Sepha> {
                   setState(() {
                     if (numberOfSephaClicked == 33) {
                       numberOfSephaClicked = 0;
+                      if (taspehRound == 4) {
+                        taspehRound = 0;
+                      } else {
+                        taspehRound++;
+                      }
                     }
+
                     numberOfSephaClicked++;
-                    rotateAngle += 10;
                   });
                 },
                 child: Text(
-                  "سبحان الله ",
+                  "${taspeh[taspehRound]} ",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w400,
