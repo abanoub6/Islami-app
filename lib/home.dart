@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/app_theme.dart';
 import 'package:islami_app/settings.dart';
 import 'package:islami_app/taps/hadeth/hadeth.dart';
 import 'package:islami_app/taps/quran/quran.dart';
@@ -13,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int currentIndex = 0;
+  int currentIndex = 3;
   List<Widget> taps = [RadioTap(), Sepha(), Hadeth(), Quran(), Settings()];
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       child: Scaffold(
+        appBar: AppBar(title: Text("إسلامي")),
         body: taps[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
