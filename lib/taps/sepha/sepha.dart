@@ -85,16 +85,7 @@ class _SephaState extends State<Sepha> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    if (numberOfSephaClicked == 33) {
-                      numberOfSephaClicked = 0;
-                      if (taspehRound == 4) {
-                        taspehRound = 0;
-                      } else {
-                        taspehRound++;
-                      }
-                    }
-
-                    numberOfSephaClicked++;
+                    onTaspehClicked();
                   });
                 },
                 child: Text(
@@ -111,5 +102,18 @@ class _SephaState extends State<Sepha> {
         ],
       ),
     );
+  }
+
+  void onTaspehClicked() {
+    if (numberOfSephaClicked == 33) {
+      numberOfSephaClicked = 0;
+      if (taspehRound == taspeh.length) {
+        taspehRound = 0;
+      } else {
+        taspehRound++;
+      }
+    }
+
+    numberOfSephaClicked++;
   }
 }
