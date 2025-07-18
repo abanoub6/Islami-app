@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sura_details.dart';
+import 'sura_details.dart';
 
 class Quran extends StatelessWidget {
   List<String> suraName = [
