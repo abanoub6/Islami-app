@@ -4,6 +4,8 @@ import 'package:islami_app/app_theme.dart';
 import 'package:islami_app/taps/quran/quran.dart';
 import 'package:flutter/services.dart';
 
+import '../../widgets/loading_indicator.dart';
+
 class SuraDetails extends StatefulWidget {
   static const String routeName = "sura details";
 
@@ -13,12 +15,17 @@ class SuraDetails extends StatefulWidget {
 
 class _SuraDetailsState extends State<SuraDetails> {
   List<String> ayat = [];
-  late SuraDetailsArg arg;
+  late SuraDetailsArg suraArg;
+  @override
+  void initState() {
+    super.initState();
+    loadSuraText();
+  }
 
   @override
   Widget build(BuildContext context) {
-    arg = ModalRoute.of(context)!.settings.arguments as SuraDetailsArg;
-    loadSuraText();
+    suraArg = ModalRoute.of(context)!.settings.arguments as SuraDetailsArg;
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -27,7 +34,7 @@ class _SuraDetailsState extends State<SuraDetails> {
         ),
       ),
       child: Scaffold(
-        appBar: AppBar(title: Text(arg.suraName)),
+        appBar: AppBar(title: Text(suraArg.suraName)),
         body: Container(
           padding: EdgeInsets.all(30),
           margin: EdgeInsets.only(left: 29, right: 29, bottom: 98),
@@ -38,7 +45,7 @@ class _SuraDetailsState extends State<SuraDetails> {
 
           child:
               ayat.isEmpty
-                  ? Center(child: CircularProgressIndicator())
+                  ? LoadingIndicator()
                   : ListView.builder(
                     itemBuilder: (context, index) {
                       return Text(
@@ -56,7 +63,7 @@ class _SuraDetailsState extends State<SuraDetails> {
 
   Future<void> loadSuraText() async {
     String suraText = await rootBundle.loadString(
-      "assets/quranText/${arg.index + 1}.txt",
+      "assets/quranText/${suraArg.index + 1}.txt",
     );
     ayat = suraText.split("\r\n");
     setState(() {});

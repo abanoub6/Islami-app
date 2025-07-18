@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:islami_app/taps/hadeth/hadeth.dart';
 
 import '../../app_theme.dart';
+import '../../widgets/loading_indicator.dart';
+import 'hadeth_details_arg.dart';
 
 class HadethDetailsScreen extends StatefulWidget {
   static const String routeName = "Hadeth details screen";
@@ -14,9 +16,10 @@ class HadethDetailsScreen extends StatefulWidget {
 }
 
 class _HadethDetailsScreenState extends State<HadethDetailsScreen> {
+  /*if we initialize it inside the build every time the build called it we
+  declear a new arg
+   */
   late HadethDetailsArg arg;
-  List<String> ahadethContent = [];
-  List<Hadeth> ahadeth = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,45 +41,21 @@ class _HadethDetailsScreenState extends State<HadethDetailsScreen> {
             borderRadius: BorderRadius.circular(25),
           ),
           child:
-              ahadethContent.isEmpty
-                  ? Center(child: CircularProgressIndicator())
-                  : Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Text(
-                          ahadethContent[index],
-                          style: Theme.of(context).textTheme.titleLarge,
-                          textAlign: TextAlign.center,
-                        );
-                      },
+              arg.content.isEmpty
+                  ? LoadingIndicator()
+                  : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Text(
+                        arg.content[index],
+                        style: Theme.of(context).textTheme.titleLarge,
+                        textAlign: TextAlign.center,
+                      );
+                    },
 
-                      itemCount: ahadethContent.length,
-                    ),
+                    itemCount: arg.content.length,
                   ),
         ),
       ),
     );
   }
-
-  Future<void> loadHadethFile() async {
-    String ahadethFileContent = await rootBundle.loadString(
-      "assets/ahadeth.txt",
-    );
-    List<String> ahadethText = ahadethFileContent.split("#");
-    ahadeth =
-        ahadethText.map((ahadethText) {
-          List<String> hadethLines = ahadethText.split("\n");
-          String title = hadethLines.first;
-          hadethLines.removeAt(0);
-          List<String> content = hadethLines;
-          return Hadeth(title: title, content: content);
-        }).toList();
-    setState(() {});
-  }
-}
-
-class Hadeth {
-  String title;
-  List<String> content = [];
-  Hadeth({required this.title, required this.content});
 }
